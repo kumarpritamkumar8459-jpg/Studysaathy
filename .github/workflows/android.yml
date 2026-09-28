@@ -24,6 +24,23 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.7'
+                
+      - name: Build APK
+        run: ./gradlew assembleDebug
 
-      - name: Build with Gradle
-        run: gradle build
+      - name: Find APK
+        run: |
+          find . -type f -name "*.apk" -print
+
+      - name: Prepare APK
+        run: |
+          mkdir -p apk-output
+          find . -type f -name "*.apk" -exec cp {} apk-output/ \;
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug-apk
+          path: apk-output/*.apk
+          if-no-files-found: error
+          
