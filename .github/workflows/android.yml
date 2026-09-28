@@ -26,7 +26,7 @@ jobs:
           gradle-version: '8.7'
                 
       - name: Build APK
-        run: ./gradlew assembleDebug
+        run: gradle assembleDebug
 
       - name: Find APK
         run: |
